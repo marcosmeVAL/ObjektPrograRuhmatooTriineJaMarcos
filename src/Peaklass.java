@@ -19,7 +19,7 @@ public class Peaklass {
             System.out.println("Kas rong võib reisi alustada (Jah/Ei): ");
             luba = luger.nextLine();
             if (luba.equalsIgnoreCase("jah")) {
-                // siia midagi vaja teha, mis siis käib?
+                rong1.RongAlustabSoitu(reisijad, peatused);
             } else if (luba.equalsIgnoreCase("ei")) {
                 System.out.println("Programm lõpetatakse.");
                 return; 
