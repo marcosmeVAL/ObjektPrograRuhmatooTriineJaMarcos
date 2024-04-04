@@ -13,13 +13,19 @@ public class Peaklass {
         Rong rong1 = new Rong("TaaviKiire", 250, "Mudel3", 12.45, peatused);
 
         String luba = "ei";
-        while (luba.toLowerCase().equals("ei")) {
-            Scanner luger = new Scanner(System.in);
-            System.out.println("Kas rong võib reisi alustada(Jah/Ei): ");
+        Scanner luger = new Scanner(System.in);
+        while (true) {
+            System.out.println("Kas rong võib reisi alustada (Jah/Ei): ");
             luba = luger.nextLine();
-
-        }if (luba.equals("jah")){
-
+            if (luba.equalsIgnoreCase("jah")) {
+                // siia midagi vaja teha, mis siis käib?
+            } else if (luba.equalsIgnoreCase("ei")) {
+                System.out.println("Programm lõpetatakse.");
+                return; 
+            } else {
+                
+                System.out.println("Vale sisend. Palun sisestage 'Jah' või 'Ei'.");
+            }
         }
     }
 
