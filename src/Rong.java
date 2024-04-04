@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.Random;
 
 public class Rong {
     private String nimi;
@@ -127,8 +128,13 @@ public class Rong {
         for (int i = 1; i < peatused.size(); i++) {
             System.out.println("Rong saabus peatusesse " + peatused.get(i)); // nimetab igat peatust
             try {
-                TimeUnit.MILLISECONDS.sleep(1000);  // ootab kindla aja ja siis jatkab
+               Random random = new Random();
+                int randomAegSekundites = random.nextInt(10) + 1; // juhusliku arvu genereerimine
+                long randomAegMillis = randomAegSekundites * 1000L; // sekundid->millisekundid
+            TimeUnit.MILLISECONDS.sleep(randomAegMillis); // paneb mingiks ajaks programmi ootama
+        }
             } catch (InterruptedException e) {
+            
             }
             int mitureisijat = 0;
             for (int j = 0; j < reisijad.size(); j++) {          // vaatab mis reisija lahkub selles peatuses
