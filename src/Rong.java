@@ -91,11 +91,7 @@ public class Rong {
         System.out.println("Rong: " + getNimi() + " alustab oma reisi peatusest " + peatused.get(0) +
                 "ja lõppetab peatuses " + peatused.get(peatused.size()-1));
 
-        System.out.println(Tulevikureisijad);
-
         this.reisijad = PiletiOstmineVõiKotroll(Tulevikureisijad);
-
-        System.out.println(reisijad);
 
         try {
             TimeUnit.SECONDS.sleep(2);
@@ -129,7 +125,9 @@ public class Rong {
     }
 
     public void RongiReisijadLahkusidKindlatesPeatustes(List<String> peatused, int[] kunalahkus) {
+        System.out.println("TEre");
         for (int i = 0; i < peatused.size(); i++) {
+            System.out.println("____-");
             if (kunalahkus[i] > 0){
                 System.out.println("Peatuses " + peatused.get(i) + " lahkus: " + kunalahkus[i]);
             }else return;
@@ -152,6 +150,9 @@ public class Rong {
             for (int j = 0; j < reisijad.size(); j++) {          // vaatab mis reisija lahkub selles peatuses
                 if (peatused.get(i).equalsIgnoreCase(reisijad.get(j).getPeatusKusmahaläheb())) { //vordleb kas reisija laheb peatuses maha v mitte
                     reisijad.get(j).LahkubRongist();
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(100);
+                    }catch (InterruptedException e){}
                     reisijad.remove(j);
                     mitureisijat += 1;
                 }

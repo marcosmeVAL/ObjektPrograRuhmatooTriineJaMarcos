@@ -28,7 +28,7 @@ public class Reisija {
     }
 
     public String getPeatusKusmahaläheb() {
-        return peatusKusmahaläheb.toLowerCase();
+        return peatusKusmahaläheb;
     }
 
 

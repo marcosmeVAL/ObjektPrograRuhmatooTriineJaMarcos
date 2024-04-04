@@ -6,16 +6,49 @@ import java.util.Scanner;
 public class Peaklass {
     public static void main(String[] args) {
         String fnr = "reisijad.txt";
-        List<Reisija> reisijad = LoeReisijaAndmed(fnr);
+        List<Reisija> reisijad = new ArrayList<>();
 
         String fnp = "peatused.txt";
         List<String> peatused = LoePeatusteAndmed(fnp);
 
+        Scanner luger = new Scanner(System.in);
+        String valik;
+        while (true){
+            System.out.println("Kas soovite reisijaid ise lisada(Jah/Ei): ");
+            valik = luger.nextLine();
+            if (valik.equalsIgnoreCase("jah")){   // Ise reisija lisamine
+                System.out.println("Sisestage reisija nimi: ");
+                String nimi = luger.nextLine();
+                System.out.println("Sisestage reisija peatus: ");
+                String peatus = luger.nextLine();
+                System.out.println("Sisetage reisija raha summa: ");
+                double raha = Double.parseDouble(luger.nextLine());
+                System.out.println("Sisestage makseviis (k-kaardiga/s-sulas): ");
+                String makseviis = luger.nextLine();
+                Reisija uusreisija = new Reisija(nimi, peatus, raha, makseviis);
+                reisijad.add(uusreisija);
+            }else {
+                System.out.println("Kas soovite failist suvalisi reisijaid(Jah/Ei): ");
+                valik = luger.nextLine();
+                if (valik.equalsIgnoreCase("jah")) { // laheb 'reisijad.txt' faili lugema
+                    List<Reisija> ajutine = LoeReisijaAndmed(fnr);
+                    for (Reisija reisija : ajutine) {
+                        reisijad.add(reisija);
+                    }
+                    break;
+                }
+                if (!reisijad.isEmpty()) {
+                    if (valik.equalsIgnoreCase("ei")) break; // peaks vaatama, kas on mingit infot vahemalt sisestatud
+                }
+                System.out.println("Palun sisestage mingi info!");
+            }
+        }
+
         Rong rong1 = new Rong("TaaviKiire", 250, "Mudel3", 12.45, peatused);
 
         String luba = "ei";
-        Scanner luger = new Scanner(System.in);
         while (true) {
+
             System.out.println("Kas rong võib reisi alustada (Jah/Ei): ");
             luba = luger.nextLine();
             if (luba.equalsIgnoreCase("jah")) {
@@ -26,7 +59,6 @@ public class Peaklass {
                 System.out.println("Programm lõpetatakse.");
                 return;
             } else {
-                
                 System.out.println("Vale sisend. Palun sisestage 'Jah' või 'Ei'.");
             }
         }
@@ -36,7 +68,7 @@ public class Peaklass {
         List<String> tulemus = new ArrayList<>();
         try (Scanner luger = new Scanner(new File(fnp))){
             while (luger.hasNext()){
-                String peatus = luger.nextLine();
+                String peatus = luger.nextLine().strip();
                 tulemus.add(peatus);
             }
 
