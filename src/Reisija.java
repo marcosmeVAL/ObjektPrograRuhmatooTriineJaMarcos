@@ -55,8 +55,8 @@ public class Reisija {
         return;
     }
     public boolean KuidasMaksab(double hind, double soodus){   // vaatab mis viisil klient maksab
-        String kaardigamkse = "k"; String s = "s";
-        if (kaardigamkse.equals(this.makseviis.toLowerCase().charAt(0))){
+        String kaardimakse = "k"; String s = "s";
+        if (kaardimakse.equals(this.makseviis.toLowerCase().charAt(0))){
             if (this.KasOnKüllaltRaha(hind-soodus) == false) return false;
             System.out.println(this.getNimi() + " ostis pileti kaardiga. Pilet maksis: " + hind);
             makse((hind- soodus));
