@@ -2,11 +2,13 @@ public class Reisija {
     private String nimi;
     private String peatusKusmahaläheb;
     private double raha;
+    private String makseviis;
 
-    public Reisija(String nimi, String peatusKusmahaläheb, double raha) {
+    public Reisija(String nimi, String peatusKusmahaläheb, double raha, String makseviis) {
         this.nimi = nimi;
         this.peatusKusmahaläheb = peatusKusmahaläheb;
         this.raha = raha;
+        this.makseviis = makseviis;
     }
 
     public String getNimi() {
@@ -21,10 +23,13 @@ public class Reisija {
         return peatusKusmahaläheb;
     }
 
-    public void LahkubRongist() {
-        System.out.println(this.getNimi() + " lahkus rongist peatuses " + this.getPeatusKusmahaläheb()+".");
-        return;
+    public void LahkubRongist(String peatus) {
+        if (peatus.equals(this.getPeatusKusmahaläheb())){
+            System.out.println(this.getNimi() + " lahkus rongist peatuses " + this.getPeatusKusmahaläheb() + ".");
+            return;
+        }else return;
     }
+
     public boolean KasOnKüllaltRaha(double hind){
         if (hind > this.getRaha()){
             double paljuPuuduJääb = hind - this.getRaha();
@@ -36,6 +41,13 @@ public class Reisija {
     public void Istekoht(int koht){
         System.out.println(this.getNimi() + " istus kohale " + koht + ".");
         return;
+    }
+    public boolean KuidasMaksab(double hind){
+        if (makseviis.equals(this.makseviis.charAt(0))){
+            
+        }
+
+        return false;
     }
 
 }
