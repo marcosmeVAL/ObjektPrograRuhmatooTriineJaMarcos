@@ -21,6 +21,20 @@ public class Peaklass {
     private static List<Reisija> LoeReisijaAndmed(String fnr) {
         List<Reisija> tulemus = new ArrayList<>();
         try {
+            File fail = new File(fnr);
+            Scanner scanner = new Scanner(fail);
+            while (scanner.hasNextLine()) {
+                String rida = scanner.nextLine();
+                String[] andmed = rida.split(";");
+
+                String nimi = andmed[0];
+                String peatusKusmahaläheb = andmed[1];
+                double raha = Double.parseDouble(andmed[2]);
+                String makseviis = andmed[3];
+
+                Reisija reisija = new Reisija(nimi, peatusKusmahaläheb, raha, makseviis);
+                tulemus.add(reisija);
+            }
 
         } catch (Exception e) {
             System.out.println("Midagi laks valesti");
