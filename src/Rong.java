@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.Random;
@@ -20,6 +21,7 @@ public class Rong {
         this.hind = hind;
         this.kunalahkus = new int[peatused.size()];
         this.teenis = teenis;
+        this.reisijad = new ArrayList<>();
     }
 
     public void setNimi(String nimi) {
@@ -85,35 +87,45 @@ public class Rong {
 
     public void RongAlustabSoitu(List<Reisija> Tulevikureisijad, List<String> peatused){ //Siit pohimotteliselt kaivituvad koik meetodid
         NimetaPeatused(peatused);
+
+        System.out.println("Rong: " + getNimi() + " alustab oma reisi peatusest " + peatused.get(0) +
+                "ja lõppetab peatuses " + peatused.get(peatused.size()-1));
+
+        System.out.println(Tulevikureisijad);
+
         this.reisijad = PiletiOstmineVõiKotroll(Tulevikureisijad);
 
-        System.out.println("Rong: " + getNimi() + " alustab oma reisi peatusest " + peatused.getFirst() +
-                "ja lõppetab peatuses " + peatused.getLast());
+        System.out.println(reisijad);
+
         try {
             TimeUnit.SECONDS.sleep(2);
         } catch (InterruptedException e) {
         }
+
         RongOnTeel(getPeatused());
         Rongsõidab(reisijad, peatused, this.kunalahkus);
         RongiReisijadLahkusidKindlatesPeatustes(peatused, this.getKunalahkus());
         return;
     }
-    public List<Reisija> PiletiOstmineVõiKotroll(List<Reisija> kliendid){
+    public List<Reisija> PiletiOstmineVõiKotroll(List<Reisija> kliendid){ //
+        List<Reisija> tulemus = new ArrayList<>(); double soodus = 2.5;
         for (Reisija klient : kliendid) {
-            double soodus = 2.5;
-            if (klient.KuidasMaksab(this.getHind(), soodus)) {
-                if ("s".equals(klient.getMakseviis().toLowerCase().charAt(0))){
-                    setTeenis(getTeenis() + hind);
-                }else {
-                    setTeenis(getTeenis() + (hind - soodus));
-                }
-                reisijad.add(klient);
-            }else {
-                System.out.println(klient.getNimi() + " ei olnud võimalik piletit osta.");
+            if (klient.KuidasMaksabKaardiga(getHind(), soodus)){
+                setTeenis(getTeenis() + getHind() - soodus);
+                tulemus.add(klient);
                 continue;
+
+            } else if(klient.KuidasMaksabSulas(getHind())){
+                setTeenis(getTeenis() + getHind());
+                tulemus.add(klient);
+
             }
+            else {
+                System.out.println(klient.getNimi() + " ei saanud piletit kätte.");
+            }
+
         }
-        return reisijad;
+        return tulemus;
     }
 
     public void RongiReisijadLahkusidKindlatesPeatustes(List<String> peatused, int[] kunalahkus) {
@@ -124,37 +136,46 @@ public class Rong {
         }
     }
 
+
     public void Rongsõidab(List<Reisija> reisijad, List<String> peatused, int[] kunalahkus) { //Siin kaib labi erinevad peatused
+        int mitureisijat = 0;
         for (int i = 1; i < peatused.size(); i++) {
             System.out.println("Rong saabus peatusesse " + peatused.get(i)); // nimetab igat peatust
             try {
-               Random random = new Random();
+                Random random = new Random();
                 int randomAegSekundites = random.nextInt(10) + 1; // juhusliku arvu genereerimine
                 long randomAegMillis = randomAegSekundites * 1000L; // sekundid->millisekundid
-            TimeUnit.MILLISECONDS.sleep(randomAegMillis); // paneb mingiks ajaks programmi ootama
-        }
-            } catch (InterruptedException e) {
-            
+                TimeUnit.MILLISECONDS.sleep(randomAegMillis); // paneb mingiks ajaks programmi ootama
             }
-            int mitureisijat = 0;
+            catch (InterruptedException e) { System.out.println("Midagi läks valesti!"); }
+            mitureisijat = 0;
             for (int j = 0; j < reisijad.size(); j++) {          // vaatab mis reisija lahkub selles peatuses
-                if (peatused.get(i).toLowerCase().equals(reisijad.get(j).getPeatusKusmahaläheb())) { //vordleb kas reisija laheb peatuses maha v mitte
-                    reisijad.get(j).LahkubRongist(peatused.get(i));
+                if (peatused.get(i).equalsIgnoreCase(reisijad.get(j).getPeatusKusmahaläheb())) { //vordleb kas reisija laheb peatuses maha v mitte
+                    reisijad.get(j).LahkubRongist();
                     reisijad.remove(j);
                     mitureisijat += 1;
                 }
-            }kunalahkus[i] = mitureisijat; // lisab mitu reisijat yhes peatuses laks maha
+            }
+            kunalahkus[i] = mitureisijat; // lisab mitu reisijat yhes peatuses laks maha
         }
         RongOnLõppPeatuses();  // teatab et loppenud
     }
+
+
 
     public void RongOnLõppPeatuses() {  // lihtsalt mainib et on joudnud lopp-peatusesse
         System.out.println("Rong " + this.getNimi() + " on jõudnud lõpppeatusesse "+this.peatused.getLast() + ".");
     }
 
+
+
+
     public void RongOnTeel(List<String> peatused){ //lihtsalt mainib et rong alustas soitu
         System.out.println("Rong on lahkunud " + this.peatused.getFirst() + " peatusest ja alunud oma reisiga");
     }
+
+
+
     public void NimetaPeatused(List<String> peatused){ // nimetab peatused
         System.out.println("Peatused reisil: ");
         for (int i = 1; i < peatused.size(); i++) {

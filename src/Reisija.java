@@ -31,16 +31,21 @@ public class Reisija {
         return peatusKusmahaläheb.toLowerCase();
     }
 
-    public void LahkubRongist(String peatus) { // teatab et reisija/ klient lahkus rongist
-        if (peatus.equals(this.getPeatusKusmahaläheb())){
-            System.out.println(this.getNimi() + " lahkus rongist peatuses " + this.getPeatusKusmahaläheb() + ".");
-            return;
-        }else return;
+
+
+    public void LahkubRongist() { // teatab et reisija/ klient lahkus rongist
+        System.out.println(getNimi() + " lahkus peatuses " + getPeatusKusmahaläheb());
+        return;
     }
+
+
+
     private void makse(double hind){ // sooritab makse
         this.setRaha(this.getRaha() - hind);
         return;
     }
+
+
 
     public boolean KasOnKüllaltRaha(double hind){ // vaatab kas kliendil/reisijal on kyllalt raha
         if (hind > this.getRaha()){
@@ -50,22 +55,31 @@ public class Reisija {
         }System.out.println(this.getNimi() + " sai pileti ostetud.");
         return true;
     }
+
+
     public void Istekoht(int koht){  // pole pannud veel
         System.out.println(this.getNimi() + " istus kohale " + koht + ".");
         return;
     }
-    public boolean KuidasMaksab(double hind, double soodus){   // vaatab mis viisil klient maksab
-        String kaardimakse = "k"; String s = "s";
-        if (kaardimakse.equals(this.makseviis.toLowerCase().charAt(0))){
-            if (this.KasOnKüllaltRaha(hind-soodus) == false) return false;
-            System.out.println(this.getNimi() + " ostis pileti kaardiga. Pilet maksis: " + hind);
-            makse((hind- soodus));
+
+
+
+    public boolean KuidasMaksabKaardiga(double hind, double soodus){   // vaatab mis viisil klient maksab
+        String kaardimakse = "k"; double uushind = hind - soodus;
+        if (kaardimakse.equals(this.getMakseviis().substring(0,1))){
+            if (this.KasOnKüllaltRaha(uushind) == false) return false;
+            System.out.println(this.getNimi() + " ostis pileti kaardiga. Pilet maksis: " + uushind);
+            this.makse((uushind));
             return true;
 
-        } else if (s.equals(this.makseviis.toLowerCase().charAt(0))) {
+        }else return false;
+    }
+    public boolean KuidasMaksabSulas(double hind){
+        String s = "s";
+        if (s.equalsIgnoreCase(this.getMakseviis().substring(0,1))){
             if (this.KasOnKüllaltRaha(hind) == false) return false;
             System.out.println(this.getNimi() + " ostis pileti sulas. Pilet maksis: " + hind);
-            makse(hind);
+            this.makse(hind);
             return true;
 
         } else return false;

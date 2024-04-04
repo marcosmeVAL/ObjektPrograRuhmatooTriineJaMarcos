@@ -19,10 +19,12 @@ public class Peaklass {
             System.out.println("Kas rong võib reisi alustada (Jah/Ei): ");
             luba = luger.nextLine();
             if (luba.equalsIgnoreCase("jah")) {
+
                 rong1.RongAlustabSoitu(reisijad, peatused);
+
             } else if (luba.equalsIgnoreCase("ei")) {
                 System.out.println("Programm lõpetatakse.");
-                return; 
+                return;
             } else {
                 
                 System.out.println("Vale sisend. Palun sisestage 'Jah' või 'Ei'.");
@@ -32,7 +34,11 @@ public class Peaklass {
 
     private static List<String> LoePeatusteAndmed(String fnp) {
         List<String> tulemus = new ArrayList<>();
-        try {
+        try (Scanner luger = new Scanner(new File(fnp))){
+            while (luger.hasNext()){
+                String peatus = luger.nextLine();
+                tulemus.add(peatus);
+            }
 
         } catch (Exception e) {
             System.out.println("Midagi laks valesti");
