@@ -1,4 +1,6 @@
-Mart Koobel;Ropka;200.43
-Meril Poom;Tartu;432.30
-Teet Tihk;Tallinn;203.34
-Toomas Pilv;Tartu;10.23
+Mart Koobel;Ropka;200.43;s
+Meril Poom;Tartu;432.30;kaardiga
+Teet Tihk;Tallinn;203.34;k
+Toomas Pilv;Tartu;10.23;sulas
+Marcos Lee;Nõo;32.9;s
+Oskar Peenar;Tapa;87;k
