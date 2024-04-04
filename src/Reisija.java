@@ -23,14 +23,19 @@ public class Reisija {
 
     public void LahkubRongist() {
         System.out.println(this.getNimi() + " lahkus rongist peatuses " + this.getPeatusKusmahaläheb()+".");
+        return;
     }
     public boolean KasOnKüllaltRaha(double hind){
         if (hind > this.getRaha()){
             double paljuPuuduJääb = hind - this.getRaha();
             System.out.println(this.getNimi() + " jäi puudu " + paljuPuuduJääb + "€ piletist.");
             return false;
-        }System.out.println("");
+        }System.out.println(this.getNimi() + " sai pileti ostetud.");
         return true;
+    }
+    public void Istekoht(int koht){
+        System.out.println(this.getNimi() + " istus kohale " + koht + ".");
+        return;
     }
 
 }
