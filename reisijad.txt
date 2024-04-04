@@ -1,0 +1,4 @@
+Mart Koobel;Ropka;200.43
+Meril Poom;Tartu;432.30
+Teet Tihk;Tallinn;203.34
+Toomas Pilv;Tartu;10.23
